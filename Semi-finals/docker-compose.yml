@@ -1,0 +1,34 @@
+version: '3'
+services:
+  account-service:
+    build: ./account_service
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres_db/account_db
+    depends_on:
+      - postgres_db
+
+  postgres_db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: account_db
+    ports:
+      - "5432:5432"
+
+  hospital-service:
+    build: ./hospital_service
+    ports:
+      - "8082:8082"
+
+  timetable-service:
+    build: ./timetable_service
+    ports:
+      - "8083:8083"
+
+  document-service:
+    build: ./document_service
+    ports:
+      - "8084:8084"
